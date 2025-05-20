@@ -1,5 +1,21 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");
 
+if (!function_exists('ccParagraphsToBreaks')) {
+    function ccParagraphsToBreaks(string $html): string {
+        $paragraphs = [];
+        $pattern = '/<p[^>]*>(.*?)<\/p>/is';
+
+        // Extract the content of each paragraph
+        preg_match_all($pattern, $html, $matches);
+        $paragraphs = $matches[1];
+
+        // Join the paragraph content with <br> tags
+        $output = implode('<br>', $paragraphs);
+
+        return $output;
+    }
+}
+
 $forceConsent = $packageConfig->get('settings.force_consent') ? 'true' : 'false';
 $mode = $packageConfig->get('settings.mode') ? $packageConfig->get('settings.mode') : 'opt-in';
 $modalLayout = $packageConfig->get('settings.modal_layout');
@@ -92,6 +108,10 @@ if ($nonDefaultLocale) {
     }
 
 }
+
+$modalDescription = ccParagraphsToBreaks($modalDescription);
+$preferencesHeaderDescription = ccParagraphsToBreaks($preferencesHeaderDescription);
+$preferencesFooterDescription = ccParagraphsToBreaks($preferencesFooterDescription);
 
 
 if ($position == 'footer') {

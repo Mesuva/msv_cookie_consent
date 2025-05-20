@@ -15,7 +15,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'msv_cookie_consent';
     protected $appVersionRequired = '8.0';
-    protected $pkgVersion = '1.0.2';
+    protected $pkgVersion = '1.0.3';
 
     protected $pkgAutoloaderRegistries = [
         'src/Concrete' => '\Concrete',
